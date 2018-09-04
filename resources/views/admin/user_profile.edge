@@ -1,0 +1,107 @@
+@layout('main')
+
+@section('additionalHead')
+    <title>{{user.firstname}} {{user.lastname}}</title>
+@endsection
+
+@section('content')
+      <div class="ui text container">
+        <a href="/admin/users" class="ui labeled icon button">
+          <i class="chevron left icon"></i>
+          Retour
+        </a>
+
+        @include('includes.notification')
+
+        <div class="ui massive basic segment">
+          <h1 class="ui centered header">Profil</h1>
+        </div>
+        <div class="ui big basic segment">
+          <h3 class="ui header"><i class="user icon"></i>{{user.firstname}} {{user.lastname}}</h3>
+          <div class="ui relaxed list">
+            <div class="item">
+              <span><i class="at icon"></i> Email :</span>
+              <span>{{user.email}}</span>
+            </div>
+            <div class="item">
+              <span><i class="phone icon"></i> Tel :</span>
+              <span>{{betterNumber}}</span>
+            </div>
+            <div class="item">
+              <span><i class="home icon"></i> Adresse :</span>
+              <span>{{user.address}}</span>
+            </div>
+            <div class="item">
+              <span><i class="home icon"></i> Entrepreneur :</span>
+              @if(user.is_contractor == true)
+              <span>Oui</span>
+              @else
+              <span>Non</span>
+              @endif
+            </div>
+          </div>
+        </div>
+        @if(user.is_contractor == true)
+        <div class="item">
+          <form action="{{ '/admin/user/' + user.id + '?_method=PUT' }}" method="POST">
+            {{ csrfField() }}
+            <input type="hidden" name="is_contractor" value="false">
+            <button type="submit" class="ui small button">plus entrepreneur</button>
+          </form>
+        </div>
+        @else
+        <div class="item">
+          <form action="{{ '/admin/user/' + user.id + '?_method=PUT' }}" method="POST">
+            {{ csrfField() }}
+            <input type="hidden" name="is_contractor" value="true">
+            <button type="submit" class="ui small button">Entrepreneur</button>
+          </form>
+        </div>
+        @endif
+        <div class="ui massive basic segment">
+          <h2 class="ui centered header">Réservations</h2>
+        </div>
+        <div class="ui cards">
+          @each(booking in bookings)
+          <div class="ui card">
+            <div class="content">
+              <div class="header">
+                @if(booking.type == 'coworking')
+                Coworking
+                @elseif(booking.type == 'office')
+                Bureau privatisé
+                @elseif(booking.type == 'room')
+                Salle de réunion
+                @endif
+              </div>
+            </div>
+            <div class="content">
+              <div class="ui very relaxed list">
+                <div class="item">
+                  Date de début : {{ booking.start }}
+                </div>
+                <div class="item">
+                  @if(booking.duration == 'half_day')
+                  Durée : une demi-journée
+                  @elseif(booking.duration == 'day')
+                  Durée : une journée
+                  @elseif(booking.duration == 'week')
+                  Durée : une semaine
+                  @else
+                  Durée : un mois
+                  @endif
+                </div>
+                <div class="item">
+                  @if(booking.paid == true)
+                  Payé
+                  @else
+                  Non payé
+                  @endif
+                </div>
+              </div>
+            </div>
+          </div>
+          @endeach
+        </div>
+      </div>
+@endsection

@@ -1,0 +1,21 @@
+@layout('main')
+
+@section('additionalHead')
+    <title>Redirection</title>
+@endsection
+
+@section('content')
+      <div class="ui text container">
+        <div class="ui massive basic segment">
+          <h1 class="ui centered header">Accès refusé</h1>
+        </div>
+        <div class="ui large warning message">Vous n'êtes pas autorisé à accéder à cette partie du site</div>
+        <div class="ui large message">
+          <h3 class="subheader">Vous pouvez:</h3>
+          <div class="ui list">
+            <p class="item">vous <a href="/login">connecter</a> ou bien <a href="/register">créer un compte</a> pour accéder à cette page</p>
+            <p class="item">vous rendre sur la <a href="/">page d'accueil</a></p>
+          </div>
+        </div>
+      </div>
+@endsection

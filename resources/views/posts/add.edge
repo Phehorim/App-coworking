@@ -1,0 +1,38 @@
+@layout('main')
+
+@section('additionalHead')
+    <title>Ajouter un post</title>
+@endsection
+
+@section('content')
+      <div class="ui text container">
+        <a href="/posts" class="ui labeled icon button">
+          <i class="chevron left icon"></i>
+          Retour
+        </a>
+        <div class="ui text container">
+          <div class="ui massive basic segment">
+            <h1 class="ui centered header">Ajouter un post</h1>
+          </div>
+          <form class="ui form" action="/posts" method="POST" enctype="multipart/form-data">
+            {{ csrfField() }}
+            <div class="field">
+              <label for="title">Titre</label>
+              <input type="text" id="title" name="title" placeholder="Titre">
+            </div>
+            <div class="field">
+              <label for="body">Texte</label>
+              <textarea type="text" id="body" name="body" placeholder="Texte"></textarea>
+            </div>
+            <div class="field">
+              <label for="image" class="ui icon button">
+                <i class="file icon"></i>
+                Image
+              </label>
+              <input type="file" id="image" name="image" accept="image/*" style="display:none">
+            </div>
+            <button type="submit" class="ui positive button">Ajouter</button>
+          </form>
+        </div>
+      </div>
+@endsection

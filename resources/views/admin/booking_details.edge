@@ -1,0 +1,102 @@
+@layout('main')
+
+@section('additionalHead')
+    <title>Détails réservation</title>
+@endsection
+
+@section('content')
+      <div class="ui text container">
+        <div class="ui center aligned two column grid">
+          <div class="column">
+            <a href="/admin/schedule" class="ui labeled icon button">
+              <i class="chevron left icon"></i>
+              Retour
+            </a>
+          </div>
+          <div class="column">
+            <button id="fake-submit" class="ui negative labeled icon button">
+              <i class="minus icon"></i>
+              Supprimer
+            </button>
+          </div>
+        </div>
+
+        @include('includes.notification')
+
+        <div class="ui fluid card centered">
+          <div class="content">
+            <div class="header">
+              {{ booking.title }}
+            </div>
+          </div>
+          <div class="content">
+            <div class="ui very relaxed list">
+              <div class="item">
+                @if(booking.type == 'coworking')
+                Type de réservation : coworking
+                @elseif(booking.type == 'office')
+                Type de réservation : Bureau privatisé
+                @else
+                Type de réservation : Salle de réunion
+                @endif
+              </div>
+              <div class="item">
+                Date de début : {{ booking.start }}
+              </div>
+              <div class="item">
+                @if(booking.duration == 'half_day')
+                Durée : une demi-journée
+                @elseif(booking.duration == 'day')
+                Durée : une journée
+                @elseif(booking.duration == 'week')
+                Durée : une semaine
+                @else
+                Durée : un mois
+                @endif
+              </div>
+              <div class="item">
+                @if(booking.paid == 'totally')
+                <i class="check icon"></i>
+                Payé
+                @elseif(booking.paid == 'partially')
+                <i class="hourglass icon"></i>
+                Partiellement payé
+                @else
+                <i class="hourglass icon"></i>
+                Non payé
+                @endif
+              </div>
+            </div>
+            <div class="ui icon buttons">
+              <form action="{{ '/admin/booking/pay/' + booking.id + '?_method=PUT' }}" method="post">
+                {{ csrfField() }}
+                <input type="hidden" name="paid" value="not">
+                <button type="submit" class="ui red button"><i class="hourglass icon"></i>Non Payé</button>
+              </form>
+              <form action="{{ '/admin/booking/pay/' + booking.id + '?_method=PUT' }}" method="post">
+                {{ csrfField() }}
+                <input type="hidden" name="paid" value="partially">
+                <button type="submit" class="ui yellow button"><i class="hourglass icon"></i>Partiellement payé</button>
+              </form>
+              <form action="{{ '/admin/booking/pay/' + booking.id + '?_method=PUT' }}" method="post">
+                {{ csrfField() }}
+                <input type="hidden" name="paid" value="totally">
+                <button type="submit" class="ui green button"><i class="check icon"></i>Payé</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <form action="{{ '/admin/booking/' + booking.id + '?_method=DELETE' }}" method="POST">
+          {{ csrfField() }}
+        </form>
+        <div class="ui tiny modal">
+          <div class="content">
+            <p>Êtes-vous sûr de vouloir supprimer cette réservation ?</p>
+          </div>
+          <div class="actions">
+            <button class="ui red cancel button">Non</button>
+            <button class="ui green ok button">Oui</button>
+          </div>
+        </div>
+      </div>
+@endsection

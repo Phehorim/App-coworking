@@ -1,0 +1,38 @@
+@layout('main')
+
+@section('additionalHead')
+    <title>Modifier {{ post.title }}</title>
+@endsection
+
+@section('content')
+      <div class="ui text container">
+        <a href="/posts/{{ post.id }}" class="ui labeled icon button">
+          <i class="chevron left icon"></i>
+          Retour
+        </a>
+        <div class="ui text container">
+          <div class="ui massive basic segment">
+            <h1 class="ui centered header">Modifier le post</h1>
+          </div>
+          <form class="ui form" action="{{ '/posts/' + post.id + '?_method=PUT' }}" method="POST" enctype="multipart/form-data">
+            {{ csrfField() }}
+            <div class="field">
+              <label for="title">Titre</label>
+              <input type="text" id="title" name="title" placeholder="Title" value="{{ post.title }}">
+            </div>
+            <div class="field">
+              <label for="body">Texte</label>
+              <textarea type="text" id="body" name="body" placeholder="Body">{{ post.body }}</textarea>
+            </div>
+            <div class="field">
+              <label for="image" class="ui icon button">
+                <i class="file icon"></i>
+                Image
+              </label>
+              <input type="file" id="image" name="image" accept="image/*" style="display:none">
+            </div>
+            <button type="submit" class="ui positive button">Enregistrer</button>
+          </form>
+        </div>
+      </div>
+@endsection

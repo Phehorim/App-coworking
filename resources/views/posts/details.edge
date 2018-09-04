@@ -1,0 +1,49 @@
+@layout('main')
+
+@section('additionalHead')
+    <title>{{ post.title }}</title>
+@endsection
+
+@section('content')
+      <div class="ui text container">
+        <a href="/posts" class="ui labeled icon button">
+          <i class="chevron left icon"></i>
+          Retour
+        </a>
+        <div class="ui card centered">
+          <div class="image">
+            <img src="{{ assetsUrl(post.imgUrl) }}" alt="">
+          </div>
+          <div class="content">
+            <h2 class="header">{{ post.title }}</h2>
+            <p class="description">{{ post.body }}</p>
+          </div>
+        </div>
+        <form action="{{ '/posts/' + post.id + '?_method=DELETE' }}" method="POST" class="column right aligned">
+          {{ csrfField() }}
+        </form>
+        <div class="ui two column center aligned grid">
+          <div class="column">
+            <button id="fake-submit" class="ui negative labeled icon button">
+              <i class="minus icon"></i>
+              Supprimer
+            </button>
+          </div>
+          <div class="column">
+            <a href="/posts/edit/{{ post.id }}" class="ui primary labeled icon button">
+              <i class="edit icon"></i>
+              Modifier
+            </a>
+          </div>
+        </div>
+        <div class="ui tiny modal">
+          <div class="content">
+            <p>Êtes-vous sûr de vouloir supprimer ce post ?</p>
+          </div>
+          <div class="actions">
+            <button class="ui red cancel button">Non</button>
+            <button class="ui green ok button">Oui</button>
+          </div>
+        </div>
+      </div>
+@endsection

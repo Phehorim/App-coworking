@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/fonts/Lato/Lato-Regular.ttf">
+    {{ style('bower_components/semantic/dist/semantic.css') }}
+    {{ style('https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/components/tab.css')}}
+    {{ style('css/style.css')}}
+    {{ style('css/responsive-semantic-ui.css')}}
+    @!section('additionalHead')
+  </head>
+  <body>
+    {{-- navigation --}}
+    <nav class="ui blue inverted labeled icon mobile hidden menu">
+      <a class="item" href="/"><img class="ui tiny image" src="/images/logo_coopconnexion.png" alt="Logo de CoopConnexion"></a>
+      <a class="item" href="/"><i class="home icon"></i>Accueil</a>
+      @if(auth.user.is_admin)
+      <a class="item" href="/admin/book"><i class="calendar alternate outline icon"></i>Réservation</a>
+      @endif
+      @if(!auth.user.is_admin)
+      <a class="item" href="/book"><i class="calendar alternate outline icon"></i>Réservation</a>
+      @endif
+      <a class="item" href="/news"><i class="newspaper outline icon"></i>Actualités</a>
+      <a class="item" href="/contact"><i class="phone square icon"></i>Contact</a>
+      <div class="right menu">
+        @loggedIn
+        @if(auth.user.is_admin)
+        <div class="ui dropdown item">
+          <i class="user secret icon"></i>
+          Admin
+          <div class="menu">
+            <a class="item" href="/admin/schedule"><i class="calendar alternate outline icon"></i>Planning</a>
+            <a class="item" href="/admin/users"><i class="users icon"></i>Utilisateurs</a>
+            <a class="item" href="/posts"><i class="list icon"></i>Posts</a>
+          </div>
+        </div>
+        @endif
+        <a class="item" href="/profile"><i class="user icon"></i>{{ auth.user.firstname }} {{ auth.user.lastname }}</a>
+        <a class="item" href="/logout"><i class="sign out icon"></i>Déconnexion</a>
+        @else
+        <a class="item" href="/register"><i class="pencil alternate icon"></i>S'inscrire</a>
+        <a class="item" href="/login"><i class="sign in icon"></i>Se connecter</a>
+        @endloggedIn
+      </div>
+    </nav>
+    <div class="mobile only">
+      <button class="ui massive icon button" id="toggle-button"><i class="bars icon"></i></button>
+      <div class="ui left demo vertical inverted sidebar labeled icon menu">
+        <a class="item" href="/"><img class="ui tiny image" src="/images/logo_coopconnexion.png" alt="Logo de CoopConnexion"></a>
+        <a class="item" href="/"><i class="home icon"></i>Accueil</a>
+        @if(auth.user.is_admin)
+        <a class="item" href="/admin/book"><i class="calendar alternate outline icon"></i>Réservation</a>
+        @endif
+        @if(!auth.user.is_admin)
+        <a class="item" href="/book"><i class="calendar alternate outline icon"></i>Réservation</a>
+        @endif
+        <a class="item" href="/news"><i class="newspaper outline icon"></i>Actualités</a>
+        <a class="item" href="/contact"><i class="phone square icon"></i>Contact</a>
+        @loggedIn
+        @if(auth.user.is_admin)
+        <a class="item" href="/admin"><i class="user secret icon"></i>Admin</a>
+        @endif
+        <a class="item" href="/profile"><i class="user icon"></i>{{ auth.user.firstname }} {{ auth.user.lastname }}</a>
+        <a class="item" href="/logout"><i class="sign out icon"></i>Déconnexion</a>
+        @else
+        <a class="item" href="/register"><i class="pencil alternate icon"></i>S'inscrire</a>
+        <a class="item" href="/login"><i class="sign in icon"></i>Se connecter</a>
+        @endloggedIn
+      </div>
+    </div>
+    {{-- content --}}
+    <div class="ui container">
+      @!section('content')
+    </div>
+
+    {{ script('bower_components/jquery/dist/jquery.js') }}
+    {{ script('bower_components/semantic/dist/semantic.js') }}
+    @!section('additionalScript')
+    {{ script('js/main.js') }}
+  </body>
+</html>

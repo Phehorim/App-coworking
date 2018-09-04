@@ -1,0 +1,5 @@
+@if(flashMessage('notification'))
+  <div class="ui {{ flashMessage('notification.type') }} message">
+    {{ flashMessage('notification.message') }}
+  </div>
+@endif

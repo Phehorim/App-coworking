@@ -1,0 +1,103 @@
+@layout('main')
+
+@section('additionalHead')
+    <title>Confirmation</title>
+@endsection
+
+@section('content')
+      <div class="ui text container">
+        <div class="ui fluid   card">
+          <div class="content">
+            <h3 class="header">Votre réservation :</h3>
+          </div>
+          <div class="content">
+            <div class="ui two column grid">
+              <div class="column">
+                Vous réservez :
+              </div>
+              <div class="column">
+                @if(type == 'coworking')
+                Une place de Coworking
+                @elseif(type == 'office')
+                Un bureau privé
+                @else
+                La salle de réunion
+                @endif
+              </div>
+              <div class="column">
+                Durée :
+              </div>
+              <div class="column">
+                @if(duration == 'half_day')
+                Une demi-journée
+                @elseif(duration == 'day')
+                Une journée
+                @elseif(duration == 'week')
+                Une semaine
+                @else
+                Un mois
+                @endif
+              </div>
+              <div class="column">
+                @if(duration == 'half_day' || duration == 'day')
+                Le :
+                @else
+                À partir du :
+                @endif
+              </div>
+              <div class="column">
+                {{ startInput }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <form action="/book/next" method="post">
+          {{ csrfField() }}
+        </form>
+        <div class="ui two column grid">
+          <div class="column">
+            <button id="fake-submit" class="ui primary button">Réserver</button>
+            <span>et payer plus tard</span>
+          </div>
+          <div class="column" id="paypal-button"></div>
+        </div>
+        <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+        <script>
+        paypal.Button.render({
+          env: 'sandbox',
+          client: {
+            sandbox: 'demo_sandbox_client_id'
+          },
+          locale: 'fr_FR',
+          style: {
+            size: 'medium'
+          },
+          payment: function (data, actions) {
+            return actions.payment.create({
+              transactions: [{
+                amount: {
+                  total: '7.2',
+                  currency: 'EUR'
+                }
+              }]
+            });
+          },
+          onAuthorize: function (data, actions) {
+            return actions.payment.execute()
+            .then(function () {
+              window.alert('Thank you for your purchase!');
+            });
+          }
+        }, '#paypal-button');
+        </script>
+        <div class="ui tiny modal">
+          <div class="content">
+            <p>Souhaitez vous effectuer cette réservation ?</p>
+          </div>
+          <div class="actions">
+            <button class="ui red cancel button">Annuler</button>
+            <button class="ui blue ok button">Confirmer</button>
+          </div>
+        </div>
+      </div>
+@endsection

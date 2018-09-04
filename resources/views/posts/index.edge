@@ -1,0 +1,31 @@
+@layout('main')
+
+@section('additionalHead')
+    <title>Posts</title>
+@endsection
+
+@section('content')
+      <div class="ui text container">
+        <div class="ui massive basic segment">
+          <h1 class="ui centered header">Posts</h1>
+        </div>
+        <a href="/admin" class="ui labeled icon button">
+          <i class="chevron left icon"></i>
+          Retour
+        </a>
+        <a href="/posts/add" class="ui positive labeled icon button">
+          <i class="plus icon"></i>
+          Ajouter un post
+        </a>
+
+        @include('includes.notification')
+
+        <ul class="ui link list">
+          @each(post in posts)
+          <li class="item">
+            <a href="posts/{{ post.id }}">{{ post.title }}</a>
+          </li>
+          @endeach
+        </ul>
+      </div>
+@endsection

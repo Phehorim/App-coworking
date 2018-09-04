@@ -1,0 +1,36 @@
+@layout('main')
+
+@section('additionalHead')
+    {{ style('bower_components/fullcalendar/dist/fullcalendar.css') }}
+    <title>Planning</title>
+@endsection
+
+
+@section('content')
+      <noscript>
+        Cette page ne peut pas fonctionner sans Javascript
+      </noscript>
+
+      @include('includes.notification')
+
+      <div class="ui basic massive segment">
+        <div class="ui six buttons">
+          <a class="ui white button" id="all">Tous</a>
+          <a class="ui blue button" id="coworking">Coworking</a>
+          <a class="ui violet button" id="office">Bureau privatisé</a>
+          <a class="ui grey button" id="room">Salle de réunion</a>
+          <a class="ui red button" id="notPaid">Non payé</a>
+          <a class="ui yellow button" id="partiallyPaid">Partiellement payé</a>
+        </div>
+      </div>
+      <div class="ui active big loader"></div>
+      <div id="calendar"></div>
+@endsection
+
+
+@section('additionalScript')
+    {{ script('bower_components/moment/moment.js') }}
+    {{ script('bower_components/fullcalendar/dist/fullcalendar.js') }}
+    {{ script('bower_components/fullcalendar/dist/locale/fr.js') }}
+    {{ script('js/admin_schedule.js') }}
+@endsection

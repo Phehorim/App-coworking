@@ -1,0 +1,23 @@
+@layout('main')
+
+@section('additionalHead')
+    <title>Actualités</title>
+@endsection
+
+@section('content')
+      <div class="ui cards">
+        @each(post in posts)
+        <div class="card">
+          <div class="image">
+            <img src="{{post.imgUrl}}" alt="{{post.title}}">
+          </div>
+          <div class="content">
+            <h3 class="header">{{post.title}}</h3>
+            <p class="description">
+              {{post.body}}
+            </p>
+          </div>
+        </div>
+        @endeach
+      </div>
+@endsection

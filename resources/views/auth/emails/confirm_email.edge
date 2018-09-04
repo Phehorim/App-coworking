@@ -1,0 +1,7 @@
+{{-- email message here, need to choose what to say --}}
+<p>Bonjour <i>{{ lastname }} {{ firstname }}</i>,</p>
+<br>
+<p>Tout l’équipe de CoopWork vous remercie de votre inscription et vous souhaite la bienvenue.
+<br>
+Afin de valider votre compte veuillez confirmez votre adresse email en cliquant <a href="{{ appUrl('register/confirm/' + confirmation_token) }}">sur ce lien</a>
+</p>

@@ -1,0 +1,165 @@
+@layout('main')
+
+@section('additionalHead')
+    {{ style('/bower_components/semantic-ui-calendar/dist/calendar.css') }}
+    <title>Réservation</title>
+@endsection
+
+
+@section('content')
+      <noscript>
+        Cette page ne peut pas fonctionner sans Javascript
+      </noscript>
+      <div class="ui text container">
+        <div class="ui massive basic segment">
+          <h1 class="ui centered header">Réserver</h1>
+        </div>
+
+        @include('includes.notification')
+
+        <div class="ui massive raised segment" data-tab="coworking">
+          <form class="ui form" action="/admin/book" method="post">
+            {{ csrfField() }}
+            <div class="grouped fields">
+              <h4>Je réserve</h4>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="type" value="coworking" checked>
+                  <label>Une place de Coworking</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="type" value="office">
+                  <label>Un bureau privatisé</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="type" value="room">
+                  <label>La salle de réunion</label>
+                </div>
+              </div>
+            </div>
+            <div class="grouped fields">
+              <h4>Pour</h4>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="duration" value="half_day" checked>
+                  <label>1/2 journée</label>
+                </div>
+              </div>
+              <div class="ui mini basic segment">
+                <div class="field">
+                  <div class="ui radio checkbox">
+                    <input type="radio" name="which" value="morning" checked>
+                    <label>Matin</label>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="ui radio checkbox">
+                    <input type="radio" name="which" value="afternoon">
+                    <label>Après-midi</label>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="duration" value="day">
+                  <label>1 journée</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="duration" value="week">
+                  <label>1 Semaine</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="duration" value="month">
+                  <label>1 Mois</label>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <h4>À partir du</h4>
+              <div class="ui calendar" id="calendar1">
+                <div class="ui input left icon">
+                  <i class="calendar alternate outline icon"></i>
+                  <input type="text" class="start-input" name="start" placeholder="Date">
+                </div>
+              </div>
+            </div>
+            <div class="ui segment">
+              <h4>À quel nom ?</h4>
+              <div class="fields">
+                <div class="field">
+                  <label>Nom</label>
+                  <input type="text" name="lastname" value="">
+                </div>
+                <div class="field">
+                  <label>Prénom</label>
+                  <input type="text" name="firstname" value="">
+                </div>
+              </div>
+              <div class="ui horizontal divider">
+                ou
+              </div>
+              <div class="field">
+                <label>Utilisateur enregistré</label>
+                <div class="ui selection dropdown">
+                  <input type="hidden" name="user_id" value="">
+                  <i class="dropdown icon"></i>
+                  <div class="default text">Séléctionner un utilisateur</div>
+                  <div class="menu">
+                    @each(user in users)
+                    <div class="item" data-value="{{ user.id }}">
+                      {{ user.firstname }} {{ user.lastname }}
+                    </div>
+                    @endeach
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="grouped fields">
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="paid" value="not" checked>
+                  <label>Non payé</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="paid" value="partially">
+                  <label>Partiellement payé</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="paid" value="totally">
+                  <label>Payé</label>
+                </div>
+              </div>
+            </div>
+          </form>
+          <button id="fake-submit" class="ui primary button">Réserver</button>
+        </div>
+        <div class="ui tiny modal">
+          <div class="content">
+            <p>Êtes vous sûr de vouloir réserver ?</p>
+          </div>
+          <div class="actions">
+            <button class="ui red cancel button">Je ne réserve pas</button>
+            <button class="ui blue ok button">Je réserve</button>
+          </div>
+        </div>
+      </div>
+@endsection
+
+@section('additionalScript')
+    {{ script('bower_components/moment/moment.js') }}
+    {{ script('https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/components/tab.js') }}
+    {{ script('/bower_components/semantic-ui-calendar/dist/calendar.js') }}
+    {{ script('js/datepicker.js') }}
+@endsection

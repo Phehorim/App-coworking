@@ -1,0 +1,36 @@
+@layout('main')
+
+@section('additionalHead')
+    <title>Se connecter</title>
+@endsection
+
+@section('content')
+      <div class="ui text container">
+        <div class="ui massive basic segment">
+          <h1 class="ui centered header">Connexion</h1>
+        </div>
+        <form action="{{ route('login') }}" method="post" class="ui form">
+          {{ csrfField() }}
+
+          @include('includes.notification')
+
+          <div class="field">
+            <label>Adresse Email</label>
+            <input type="email" name="email">
+          </div>
+          <div class="field">
+            <label>Mot de passe</label>
+            <input type="password" name="password">
+          </div>
+          <div class="field">
+            <div class="ui checkbox">
+              <label>Se souvenir de moi</label>
+              <input type="checkbox" name="remember">
+            </div>
+          </div>
+          <button type="submit" class="ui primary submit button">Se connecter</button>
+          <a href="/password/reset" class="ui button">Mot de passe oublié</a>
+          <a href="/register" class="ui button">Créer un compte</a>
+        </form>
+      </div>
+@endsection
