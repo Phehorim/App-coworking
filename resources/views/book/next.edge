@@ -54,42 +54,7 @@
         <form action="/book/next" method="post">
           {{ csrfField() }}
         </form>
-        <div class="ui two column grid">
-          <div class="column">
-            <button id="fake-submit" class="ui primary button">Réserver</button>
-            <span>et payer plus tard</span>
-          </div>
-          <div class="column" id="paypal-button"></div>
-        </div>
-        <script src="https://www.paypalobjects.com/api/checkout.js"></script>
-        <script>
-        paypal.Button.render({
-          env: 'sandbox',
-          client: {
-            sandbox: 'demo_sandbox_client_id'
-          },
-          locale: 'fr_FR',
-          style: {
-            size: 'medium'
-          },
-          payment: function (data, actions) {
-            return actions.payment.create({
-              transactions: [{
-                amount: {
-                  total: '7.2',
-                  currency: 'EUR'
-                }
-              }]
-            });
-          },
-          onAuthorize: function (data, actions) {
-            return actions.payment.execute()
-            .then(function () {
-              window.alert('Thank you for your purchase!');
-            });
-          }
-        }, '#paypal-button');
-        </script>
+        <button id="fake-submit" class="ui primary button">Réserver</button>
         <div class="ui tiny modal">
           <div class="content">
             <p>Souhaitez vous effectuer cette réservation ?</p>

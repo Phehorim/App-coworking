@@ -1,0 +1,23 @@
+@layout('main')
+
+@section('additionalHead')
+    <title>Listes des réservations</title>
+@endsection
+
+@section('content')
+      <div class="ui text container">
+        <div class="ui basic large segment">
+          <div class="ui basic massive segment">
+            <h2 class="ui centered header">Liste des réservations</h2>
+          </div>
+          <i>les réservations récentes sont au début</i>
+        </div>
+        <div class="ui relaxed list">
+          @each(booking in bookings)
+            <div class="item">
+              <a href="/admin/booking/{{ booking.id }}">{{ booking.id }} - {{booking.title}}</a>
+            </div>
+          @endeach
+        </div>
+      </div>
+@endsection

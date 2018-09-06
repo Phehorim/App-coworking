@@ -55,6 +55,7 @@ Route.group(() => {
   Route.put('user/:id', 'Admin/AdminController.isContractorToggle')
   //bookings -- details
   Route.get('booking/:id', 'Admin/AdminController.bookingDetails')
+  Route.get('bookings', 'Admin/AdminController.bookingList')
   Route.put('booking/pay/:id', 'Admin/AdminController.paidSwitch')
   Route.delete('booking/:id', 'Admin/BookController.deleteBooking')
   //bookings -- book

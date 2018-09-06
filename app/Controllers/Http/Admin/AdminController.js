@@ -70,9 +70,18 @@ class AdminController {
     return events
   }
 
-  async bookingDetails({ request, view }) {
+  async bookingList({ view }) {
+    const bookings = await Booking.query()
+    bookings.reverse()
 
-    const booking = await Booking.findBy('id', request.params.id)
+    return view.render('admin.booking-list', {
+      bookings: bookings
+    })
+  }
+
+  async bookingDetails({ params, view }) {
+
+    const booking = await Booking.findBy('id', params.id)
     booking.start = moment(booking.start).subtract(1, 'day').format('DD-MM-YYYY')
     booking.end = moment(booking.end).subtract(1, 'day').format('DD-MM-YYYY')
 

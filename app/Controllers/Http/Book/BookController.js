@@ -142,6 +142,7 @@ class BookController {
   }
 
   showNext({ session, view }) {
+
     return view.render('book.next', {
       type: session.get('type'),
       startInput: session.get('startInput'),
